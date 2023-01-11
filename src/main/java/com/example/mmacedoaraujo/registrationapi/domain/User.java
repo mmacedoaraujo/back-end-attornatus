@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,33 +15,32 @@ import java.util.Objects;
 @Setter
 @Builder
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
-public class Adress {
+@NoArgsConstructor
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String logradouro;
-    private String cep;
-    private Integer numero;
-    private String cidade;
+    private String name;
+    private LocalDate birthdate;
+    private List<Adress> adressList;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Adress adress = (Adress) o;
+        User user = (User) o;
 
-        if (!Objects.equals(id, adress.id)) return false;
-        return Objects.equals(cep, adress.cep);
+        if (!Objects.equals(id, user.id)) return false;
+        return Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (cep != null ? cep.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }
