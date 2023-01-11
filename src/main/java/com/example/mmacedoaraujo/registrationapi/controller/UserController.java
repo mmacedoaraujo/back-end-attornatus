@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +24,12 @@ public class UserController {
         List<User> users = userService.listAll();
 
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/find/{name}")
+    public ResponseEntity<List<User>> findByName(@PathVariable String name) {
+        List<User> userFoundByUsername = userService.findUserByName(name);
+
+        return new ResponseEntity<>(userFoundByUsername, HttpStatus.OK);
     }
 }
