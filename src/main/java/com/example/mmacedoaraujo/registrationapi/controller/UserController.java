@@ -38,7 +38,14 @@ public class UserController {
         return new ResponseEntity<>(userFoundByUsername, HttpStatus.OK);
     }
 
-    @PutMapping("/mainaddress")
+    @PatchMapping("/update")
+    public ResponseEntity<Void> updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("/mainaddress")
     public ResponseEntity<User> setMainAddress(@RequestParam Long userId, @RequestParam Long addressId) {
         User user = userService.setMainAddress(userId, addressId);
 

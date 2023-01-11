@@ -2,7 +2,6 @@ package com.example.mmacedoaraujo.registrationapi.controller;
 
 import com.example.mmacedoaraujo.registrationapi.domain.Address;
 import com.example.mmacedoaraujo.registrationapi.repository.AddressRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +12,13 @@ import java.util.List;
 
 @RequestMapping("/address")
 @RestController
-@RequiredArgsConstructor
 public class AdressController {
 
     private final AddressRepository addressRepository;
+
+    public AdressController(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
 
     @GetMapping
     public ResponseEntity<List<Address>> listAll() {

@@ -3,6 +3,7 @@ package com.example.mmacedoaraujo.registrationapi.service;
 import com.example.mmacedoaraujo.registrationapi.domain.Address;
 import com.example.mmacedoaraujo.registrationapi.domain.User;
 import com.example.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExeption;
+import com.example.mmacedoaraujo.registrationapi.mapper.UserMapper;
 import com.example.mmacedoaraujo.registrationapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,14 @@ public class UserService {
 
     public List<User> findUserByName(String name) {
         return userRepository.findUserByName(name.toUpperCase());
+    }
+
+    public void updateUser(User userWithChanges) {
+        User alreadyRegisteredUser = findUserById(userWithChanges.getId());
+        User updatedUser = UserMapper.INSTANCE.updateUser(userWithChanges, alreadyRegisteredUser);
+
+        userRepository.save(updatedUser);
+
     }
 
     public User setMainAddress(Long userId, Long addressId) {
