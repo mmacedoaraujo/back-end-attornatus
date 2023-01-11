@@ -1,7 +1,7 @@
 package com.example.mmacedoaraujo.registrationapi.controller;
 
-import com.example.mmacedoaraujo.registrationapi.domain.Adress;
-import com.example.mmacedoaraujo.registrationapi.repository.AdressRepository;
+import com.example.mmacedoaraujo.registrationapi.domain.Address;
+import com.example.mmacedoaraujo.registrationapi.repository.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdressController {
 
-    private final AdressRepository adressRepository;
+    private final AddressRepository addressRepository;
 
     @GetMapping
-    public ResponseEntity<List<Adress>> listAll() {
-        List<Adress> allAdresses = adressRepository.findAll();
+    public ResponseEntity<List<Address>> listAll() {
+        List<Address> allAddresses = addressRepository.findAll();
 
-        return new ResponseEntity<>(allAdresses, HttpStatus.OK);
+        return new ResponseEntity<>(allAddresses, HttpStatus.OK);
     }
 }

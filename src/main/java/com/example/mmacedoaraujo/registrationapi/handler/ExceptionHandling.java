@@ -1,5 +1,7 @@
 package com.example.mmacedoaraujo.registrationapi.handler;
 
+import com.example.mmacedoaraujo.registrationapi.exceptions.AddressNotFoundException;
+import com.example.mmacedoaraujo.registrationapi.exceptions.AddressNotFoundExceptionDetails;
 import com.example.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExceptionDetails;
 import com.example.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExeption;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,20 @@ public class ExceptionHandling extends ResponseEntityExceptionHandler {
                         .title("NOT_FOUND")
                         .details(userNotFoundExeption.getMessage())
                         .message(userNotFoundExeption.getClass().getName())
+                        .build(), HttpStatus.NOT_FOUND
+
+        );
+    }
+
+    @ExceptionHandler(AddressNotFoundException.class)
+    public ResponseEntity<AddressNotFoundExceptionDetails> userNotFoundExceptionHandle(AddressNotFoundException addressNotFoundException) {
+        return new ResponseEntity<>(
+                AddressNotFoundExceptionDetails.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.NOT_FOUND.value())
+                        .title("NOT_FOUND")
+                        .details(addressNotFoundException.getMessage())
+                        .message(addressNotFoundException.getClass().getName())
                         .build(), HttpStatus.NOT_FOUND
 
         );

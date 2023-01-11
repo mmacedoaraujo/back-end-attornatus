@@ -26,7 +26,7 @@ public class User {
     private String name;
     private LocalDate birthdate;
     @OneToMany(mappedBy = "userId")
-    private List<Adress> adressList;
+    private List<Address> addressList;
 
     @Override
     public boolean equals(Object o) {

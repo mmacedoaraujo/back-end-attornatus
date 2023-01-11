@@ -1,5 +1,6 @@
 package com.example.mmacedoaraujo.registrationapi.service;
 
+import com.example.mmacedoaraujo.registrationapi.domain.Address;
 import com.example.mmacedoaraujo.registrationapi.domain.User;
 import com.example.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExeption;
 import com.example.mmacedoaraujo.registrationapi.repository.UserRepository;
@@ -13,6 +14,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AddressService addressService;
 
     public List<User> listAll() {
         return userRepository.findAll();
@@ -26,6 +28,15 @@ public class UserService {
 
     public List<User> findUserByName(String name) {
         return userRepository.findUserByName(name.toUpperCase());
+    }
+
+    public User setMainAddress(Long userId, Long addressId) {
+        User userFounById = findUserById(userId);
+        for (Address x : userFounById.getAddressList()) {
+            x.setEnderecoPrincipal(false);
+        }
+        addressService.setAsMainAddress(addressId);
+        return userFounById;
     }
 
 }

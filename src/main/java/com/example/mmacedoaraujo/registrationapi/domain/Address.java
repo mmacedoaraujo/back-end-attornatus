@@ -1,6 +1,5 @@
 package com.example.mmacedoaraujo.registrationapi.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,11 +10,10 @@ import java.util.Objects;
 @Entity
 @Setter
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "address_tb")
-public class Adress {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +22,7 @@ public class Adress {
     private String cep;
     private Integer numero;
     private String cidade;
+    private boolean enderecoPrincipal;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIdentityReference(alwaysAsId = true)
@@ -34,10 +33,10 @@ public class Adress {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Adress adress = (Adress) o;
+        Address address = (Address) o;
 
-        if (!Objects.equals(id, adress.id)) return false;
-        return Objects.equals(cep, adress.cep);
+        if (!Objects.equals(id, address.id)) return false;
+        return Objects.equals(cep, address.cep);
     }
 
     @Override
@@ -47,4 +46,7 @@ public class Adress {
         return result;
     }
 
+    public String toString() {
+        return "Address(id=" + this.getId() + ", logradouro=" + this.getLogradouro() + ", cep=" + this.getCep() + ", numero=" + this.getNumero() + ", cidade=" + this.getCidade() + ", enderecoPrincipal=" + this.isEnderecoPrincipal() + ", userId=" + this.userId.getId() + ")";
+    }
 }
