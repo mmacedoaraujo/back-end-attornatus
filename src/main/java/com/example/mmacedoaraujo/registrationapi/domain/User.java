@@ -1,9 +1,6 @@
 package com.example.mmacedoaraujo.registrationapi.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,6 +14,7 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "user_tb")
 public class User {
 
     @Id
@@ -24,6 +22,7 @@ public class User {
     private Long id;
     private String name;
     private LocalDate birthdate;
+    @OneToMany(mappedBy = "user")
     private List<Adress> adressList;
 
     @Override

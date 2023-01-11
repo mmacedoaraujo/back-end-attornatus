@@ -1,9 +1,6 @@
 package com.example.mmacedoaraujo.registrationapi.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
@@ -13,8 +10,9 @@ import java.util.Objects;
 @Setter
 @Builder
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "address_tb")
 public class Adress {
 
     @Id
@@ -24,6 +22,9 @@ public class Adress {
     private String cep;
     private Integer numero;
     private String cidade;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Override
     public boolean equals(Object o) {
