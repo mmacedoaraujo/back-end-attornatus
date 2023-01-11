@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -27,8 +28,9 @@ public class RegistrationApiApplication {
     public void run() {
         User user = new User(null, "Marcos", LocalDate.now(), null);
         Adress adress = new Adress(null, "Teste", "27638762", 19, "Teste", user);
+        Adress adress2 = new Adress(null, "Teste2", "2762323", 123, "Teste", user);
         userRepository.save(user);
-        adressRepository.save(adress);
+        adressRepository.saveAll(Arrays.asList(adress2, adress));
 
     }
 }
