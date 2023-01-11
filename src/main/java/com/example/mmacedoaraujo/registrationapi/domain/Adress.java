@@ -1,13 +1,14 @@
 package com.example.mmacedoaraujo.registrationapi.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
 
-@Entity
 @Getter
+@Entity
 @Setter
 @Builder
 @ToString
@@ -25,8 +26,8 @@ public class Adress {
     private String cidade;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private User user;
+    @JsonIdentityReference(alwaysAsId = true)
+    private User userId;
 
     @Override
     public boolean equals(Object o) {
@@ -45,4 +46,5 @@ public class Adress {
         result = 31 * result + (cep != null ? cep.hashCode() : 0);
         return result;
     }
+
 }

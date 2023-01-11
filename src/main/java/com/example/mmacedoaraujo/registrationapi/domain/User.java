@@ -1,6 +1,7 @@
 package com.example.mmacedoaraujo.registrationapi.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user_tb")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
     @Id
@@ -23,8 +25,7 @@ public class User {
     private Long id;
     private String name;
     private LocalDate birthdate;
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "userId")
     private List<Adress> adressList;
 
     @Override

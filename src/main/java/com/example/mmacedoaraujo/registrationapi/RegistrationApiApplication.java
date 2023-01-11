@@ -27,10 +27,12 @@ public class RegistrationApiApplication {
     @Bean
     public void run() {
         User user = new User(null, "Marcos", LocalDate.now(), null);
+        User user2 = new User(null, "Alessandra", LocalDate.now(), null);
         Adress adress = new Adress(null, "Teste", "27638762", 19, "Teste", user);
         Adress adress2 = new Adress(null, "Teste2", "2762323", 123, "Teste", user);
-        userRepository.save(user);
-        adressRepository.saveAll(Arrays.asList(adress2, adress));
+        Adress adress3 = new Adress(null, "Teste2", "2762323", 123, "Teste", user2);
+        userRepository.saveAll(Arrays.asList(user, user2));
+        adressRepository.saveAll(Arrays.asList(adress2, adress, adress3));
 
     }
 }
