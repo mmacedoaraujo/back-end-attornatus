@@ -1,31 +1,29 @@
 package com.example.mmacedoaraujo.registrationapi.handler;
 
-import com.example.mmacedoaraujo.registrationapi.domain.HttpResponse;
+import com.example.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExceptionDetails;
 import com.example.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExeption;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
-public class ExceptionHandling {
+public class ExceptionHandling extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoundExeption.class)
-    public ResponseEntity<HttpResponse> userNotFoundExceptionHandle() {
-        return createHttpResponse(HttpStatus.BAD_REQUEST, "Nenhum usuário encontrado com o id fornecido! ");
-    }
+    public ResponseEntity<UserNotFoundExceptionDetails> userNotFoundExceptionHandle(UserNotFoundExeption userNotFoundExeption) {
+        return new ResponseEntity<>(
+                UserNotFoundExceptionDetails.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.NOT_FOUND.value())
+                        .title("NOT_FOUND")
+                        .details(userNotFoundExeption.getMessage())
+                        .message(userNotFoundExeption.getClass().getName())
+                        .build(), HttpStatus.NOT_FOUND
 
-    private ResponseEntity<HttpResponse> createHttpResponse(HttpStatus httpStatus, String message) {
-        HttpResponse httpResponse = HttpResponse.builder()
-                .httpStatusCode(httpStatus.value())
-                .reason(httpStatus.getReasonPhrase())
-                .message(message)
-                .httpStatus(httpStatus)
-                .timestamp(LocalDateTime.now())
-                .build();
-
-        return new ResponseEntity<>(httpResponse, httpStatus);
+        );
     }
 }
