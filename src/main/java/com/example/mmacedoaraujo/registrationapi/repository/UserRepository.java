@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user FROM User user WHERE UPPER(user.name) LIKE ?1%")
-    public List<User> findUserByName(String name);
+    List<User> findUserByName(String name);
 }
