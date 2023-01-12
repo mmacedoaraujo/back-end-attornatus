@@ -28,9 +28,9 @@ public class RegistrationApiApplication {
     public void run() {
         User user = new User(null, "Marcos", LocalDate.now(), null);
         User user2 = new User(null, "Alessandra", LocalDate.now(), null);
-        Address address = new Address(null, "Teste", "27638762", 19, "Teste", false, user);
+        Address address = new Address(null, "Teste", "27638762", 19, "Teste", true, user);
         Address address2 = new Address(null, "Teste2", "2762323", 123, "Teste", false, user);
-        Address address3 = new Address(null, "Teste2", "2762323", 123, "Teste", false, user2);
+        Address address3 = new Address(null, "Teste2", "2762323", 123, "Teste", true, user2);
         userRepository.saveAll(Arrays.asList(user, user2));
         addressRepository.saveAll(Arrays.asList(address2, address, address3));
 

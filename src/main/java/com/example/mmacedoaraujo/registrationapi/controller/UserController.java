@@ -44,8 +44,15 @@ public class UserController {
 
     @GetMapping("/getMainAddress/{userId}")
     public ResponseEntity<Address> mainAddress(@PathVariable Long userId) {
-        Address mainAddress = addressServiceImpl.getMainAddressByUserId(userId);
+        Address mainAddress = userServiceImpl.getUserMainAddress(userId);
         return new ResponseEntity<>(mainAddress, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllAddresses/{userId}")
+    public ResponseEntity<List<Address>> allAddresses(@PathVariable Long userId) {
+        List<Address> addresses = userServiceImpl.listAllUserAddresses(userId);
+
+        return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
     @PutMapping("/update")

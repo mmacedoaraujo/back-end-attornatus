@@ -28,9 +28,5 @@ public class AddressServiceImpl implements AddressService {
 
         addressRepository.save(address);
     }
-
-    @Override
-    public Address getMainAddressByUserId(Long id) {
-        return addressRepository.findMainAddressByUserId(id);
-    }
 }
+
