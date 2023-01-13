@@ -57,6 +57,13 @@ public class UserController {
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
+    @PostMapping("/saveNewUser")
+    public ResponseEntity<User> saveNewUser(@RequestBody User user) {
+        User savedUser = userServiceImpl.saveUser(user);
+
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
     @PostMapping("/addNewAddress/{userId}")
     public ResponseEntity<User> addNewAddress(@RequestBody Address address, @PathVariable Long userId) {
         User user = userServiceImpl.saveNewAddress(address, userId);

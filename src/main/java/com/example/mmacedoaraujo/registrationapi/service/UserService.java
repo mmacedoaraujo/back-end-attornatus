@@ -24,4 +24,6 @@ public interface UserService {
     User saveNewAddress(Address address, Long userId);
 
     void deleteUserAddressById(Long userId, Long addressId);
+
+    User saveUser(User user);
 }

@@ -2,9 +2,12 @@ package com.example.mmacedoaraujo.registrationapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.web.PageableDefault;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
@@ -14,7 +17,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "address_tb")
-public class Address {
+public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

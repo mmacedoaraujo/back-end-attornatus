@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(
                         () -> new UserNotFoundExeption("Não foi possível encontrar um usuário com o seguinte id: " + id));
     }
+
     public Page<User> findUserByName(Pageable pageable, String name) {
         return userRepository.findUserByName(pageable, name.toUpperCase());
     }
@@ -79,6 +80,13 @@ public class UserServiceImpl implements UserService {
     public void deleteUserAddressById(Long userId, Long addressId) {
         User userFoundById = findUserById(userId);
         addressServiceImpl.deleteAddress(addressId, userFoundById);
+    }
+
+    @Override
+    public User saveUser(User user) {
+        User newUser = new User(null, user.getName(), user.getBirthdate(), user.getAddressList());
+        return userRepository.save(newUser);
+
     }
 
 }
