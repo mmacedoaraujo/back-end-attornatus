@@ -62,6 +62,13 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/deleteUserAddress/{userId}/{addressId}")
+    public ResponseEntity<Void> deleteUserAddress(@PathVariable Long userId, @PathVariable Long addressId) {
+        userServiceImpl.deleteUserAddressById(userId, addressId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @PutMapping("/update")
     public ResponseEntity<Void> updateUser(@RequestBody User user) {
         userServiceImpl.updateUser(user);

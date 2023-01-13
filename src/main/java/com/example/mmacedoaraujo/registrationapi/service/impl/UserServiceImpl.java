@@ -75,4 +75,10 @@ public class UserServiceImpl implements UserService {
         return userFoundById;
     }
 
+    @Override
+    public void deleteUserAddressById(Long userId, Long addressId) {
+        User userFoundById = findUserById(userId);
+        addressServiceImpl.deleteAddress(addressId, userFoundById);
+    }
+
 }

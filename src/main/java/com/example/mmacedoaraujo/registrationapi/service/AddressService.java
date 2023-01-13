@@ -7,7 +7,11 @@ public interface AddressService {
 
     Address saveAddress(Address address);
 
-    void setAsMainAddress(Long id, User userId);
+    void setAsMainAddress(Long id, User user);
 
-    Address saveNewAddress(Address address, User userId);
+    Address saveNewAddress(Address address, User user);
+
+    void deleteAddress(Long addressId, User user);
+
+    Address findById(Long id);
 }

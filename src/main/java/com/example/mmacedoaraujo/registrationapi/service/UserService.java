@@ -22,4 +22,6 @@ public interface UserService {
     Address getUserMainAddress(Long userId);
 
     User saveNewAddress(Address address, Long userId);
+
+    void deleteUserAddressById(Long userId, Long addressId);
 }
