@@ -20,4 +20,6 @@ public interface UserService {
     List<Address> listAllUserAddresses(Long userId);
 
     Address getUserMainAddress(Long userId);
+
+    User saveNewAddress(Address address, Long userId);
 }

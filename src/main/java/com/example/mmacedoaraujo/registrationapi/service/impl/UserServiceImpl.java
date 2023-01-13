@@ -48,10 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User setMainAddress(Long userId, Long addressId) {
         User userFounById = findUserById(userId);
-        for (Address x : userFounById.getAddressList()) {
-            x.setEnderecoPrincipal(false);
-        }
-        addressServiceImpl.setAsMainAddress(addressId);
+        addressServiceImpl.setAsMainAddress(addressId, userFounById);
         return userFounById;
     }
 
@@ -70,5 +67,12 @@ public class UserServiceImpl implements UserService {
                 .get(0);
     }
 
+    @Override
+    public User saveNewAddress(Address address, Long userId) {
+        User userFoundById = findUserById(userId);
+        addressServiceImpl.saveNewAddress(address, userFoundById);
+
+        return userFoundById;
+    }
 
 }

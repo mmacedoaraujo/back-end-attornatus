@@ -55,6 +55,13 @@ public class UserController {
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
+    @PostMapping("/addNewAddress/{userId}")
+    public ResponseEntity<User> addNewAddress(@RequestBody Address address, @PathVariable Long userId) {
+        User user = userServiceImpl.saveNewAddress(address, userId);
+
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
     @PutMapping("/update")
     public ResponseEntity<Void> updateUser(@RequestBody User user) {
         userServiceImpl.updateUser(user);
