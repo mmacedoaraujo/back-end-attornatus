@@ -75,5 +75,9 @@ public class AddressServiceImpl implements AddressService {
         Address address = user.getAddressList().get(0);
         setAsMainAddress(address.getId(), user);
     }
+
+    public List<Address> listMainAddresses() {
+        return addressRepository.listOnlyMainAddress();
+    }
 }
 
