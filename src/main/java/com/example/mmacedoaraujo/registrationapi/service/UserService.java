@@ -2,6 +2,7 @@ package com.example.mmacedoaraujo.registrationapi.service;
 
 import com.example.mmacedoaraujo.registrationapi.domain.Address;
 import com.example.mmacedoaraujo.registrationapi.domain.User;
+import com.example.mmacedoaraujo.registrationapi.requests.UserAddressPostRequestBody;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,5 +26,5 @@ public interface UserService {
 
     void deleteUserAddressById(Long userId, Long addressId);
 
-    User saveUser(User user);
+    User saveUser(UserAddressPostRequestBody userAndAddressEntity);
 }

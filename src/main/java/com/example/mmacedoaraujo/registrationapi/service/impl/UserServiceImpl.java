@@ -5,12 +5,14 @@ import com.example.mmacedoaraujo.registrationapi.domain.User;
 import com.example.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExeption;
 import com.example.mmacedoaraujo.registrationapi.mapper.UserMapper;
 import com.example.mmacedoaraujo.registrationapi.repository.UserRepository;
+import com.example.mmacedoaraujo.registrationapi.requests.UserAddressPostRequestBody;
 import com.example.mmacedoaraujo.registrationapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,11 +85,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
-        User newUser = new User();
-        UserMapper.INSTANCE.mapRequestToEntity(user, newUser);
-        return userRepository.save(newUser);
+    public User saveUser(UserAddressPostRequestBody userAndAddressEntity) {
+        User newUser = separateEnityUser(userAndAddressEntity);
+        Address addressFromRequest = addressServiceImpl.separateAddressFromRequest(userAndAddressEntity);
+        User savedUser = userRepository.save(newUser);
+        savedUser.getAddressList().add(addressFromRequest);
+        saveNewAddress(addressFromRequest, savedUser.getId());
 
+        return savedUser;
+
+    }
+
+    private User separateEnityUser(UserAddressPostRequestBody userAndAddressEntity) {
+        return new User(null, userAndAddressEntity.getName(), userAndAddressEntity.getBirthdate(), new ArrayList<>());
     }
 
 }

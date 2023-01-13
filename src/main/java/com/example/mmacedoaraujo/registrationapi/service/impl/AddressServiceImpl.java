@@ -5,6 +5,7 @@ import com.example.mmacedoaraujo.registrationapi.domain.User;
 import com.example.mmacedoaraujo.registrationapi.exceptions.AddressNotFoundException;
 import com.example.mmacedoaraujo.registrationapi.mapper.AddressMapper;
 import com.example.mmacedoaraujo.registrationapi.repository.AddressRepository;
+import com.example.mmacedoaraujo.registrationapi.requests.UserAddressPostRequestBody;
 import com.example.mmacedoaraujo.registrationapi.service.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,11 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.findAll(pageable);
     }
 
+    public Page<Address> listMainAddresses(Pageable pageable) {
+
+        return addressRepository.listOnlyMainAddress(pageable);
+    }
+
     @Override
     public Address saveAddress(Address requestAddress) {
         Address newAddress = new Address();
@@ -36,10 +42,14 @@ public class AddressServiceImpl implements AddressService {
     public void setAsMainAddress(Long id, User user) {
         Address address = findById(id);
         address.setEnderecoPrincipal(true);
-        for (Address addr : user.getAddressList()) {
-            addr.setEnderecoPrincipal(false);
-            if (Objects.equals(addr.getId(), id)) {
-                addr.setEnderecoPrincipal(true);
+        if (user.getAddressList().isEmpty()) {
+            user.getAddressList().add(address);
+        } else {
+            for (Address addr : user.getAddressList()) {
+                addr.setEnderecoPrincipal(false);
+                if (Objects.equals(addr.getId(), id)) {
+                    addr.setEnderecoPrincipal(true);
+                }
             }
         }
         addressRepository.save(address);
@@ -80,9 +90,15 @@ public class AddressServiceImpl implements AddressService {
         setAsMainAddress(address.getId(), user);
     }
 
-    public Page<Address> listMainAddresses(Pageable pageable) {
-
-        return addressRepository.listOnlyMainAddress(pageable);
+    public Address separateAddressFromRequest(UserAddressPostRequestBody userAndAddressEntity) {
+        return new Address(null, userAndAddressEntity.getLogradouro(),
+                userAndAddressEntity.getCep(),
+                userAndAddressEntity.getNumero(),
+                userAndAddressEntity.getCidade(),
+                userAndAddressEntity.isEnderecoPrincipal(),
+                userAndAddressEntity.getUserId());
     }
+
+
 }
 
