@@ -3,16 +3,14 @@ package com.example.mmacedoaraujo.registrationapi.service.impl;
 import com.example.mmacedoaraujo.registrationapi.domain.Address;
 import com.example.mmacedoaraujo.registrationapi.domain.User;
 import com.example.mmacedoaraujo.registrationapi.exceptions.AddressNotFoundException;
+import com.example.mmacedoaraujo.registrationapi.mapper.AddressMapper;
 import com.example.mmacedoaraujo.registrationapi.repository.AddressRepository;
 import com.example.mmacedoaraujo.registrationapi.service.AddressService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -28,8 +26,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address saveAddress(Address address) {
-        return addressRepository.save(address);
+    public Address saveAddress(Address requestAddress) {
+        Address newAddress = new Address();
+        AddressMapper.INSTANCE.mapRequestToEntity(requestAddress, newAddress);
+        return addressRepository.save(newAddress);
     }
 
     @Override

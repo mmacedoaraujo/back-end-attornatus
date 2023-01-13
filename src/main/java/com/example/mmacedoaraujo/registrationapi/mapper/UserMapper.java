@@ -11,5 +11,5 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    User updateUser(User userWithChanges, @MappingTarget User alreadyRegisteredUser);
+    User mapRequestToEntity(User requestUser, @MappingTarget User entityUser);
 }

@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User userWithChanges) {
-        User alreadyRegisteredUser = findUserById(userWithChanges.getId());
-        User updatedUser = UserMapper.INSTANCE.updateUser(userWithChanges, alreadyRegisteredUser);
+    public void updateUser(User requestUser) {
+        User entityUser = findUserById(requestUser.getId());
+        User updatedUser = UserMapper.INSTANCE.mapRequestToEntity(requestUser, entityUser);
 
         userRepository.save(updatedUser);
 
@@ -84,7 +84,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        User newUser = new User(null, user.getName(), user.getBirthdate(), user.getAddressList());
+        User newUser = new User();
+        UserMapper.INSTANCE.mapRequestToEntity(user, newUser);
         return userRepository.save(newUser);
 
     }
