@@ -3,6 +3,7 @@ package com.example.mmacedoaraujo.registrationapi.domain;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.web.PageableDefault;
 
 import java.util.Objects;
 

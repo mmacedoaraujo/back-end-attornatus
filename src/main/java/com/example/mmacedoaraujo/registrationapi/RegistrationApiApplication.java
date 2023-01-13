@@ -31,8 +31,13 @@ public class RegistrationApiApplication {
         Address address = new Address(null, "Teste", "27638762", 19, "Teste", true, user);
         Address address2 = new Address(null, "Teste2", "2762323", 123, "Teste", false, user);
         Address address3 = new Address(null, "Teste2", "2762323", 123, "Teste", true, user2);
+        Address address4 = new Address(null, "Teste2", "2762323", 123, "Teste", true, user2);
+        Address address5 = new Address(null, "Teste2", "2762323", 123, "Teste", true, user2);
+        Address address6 = new Address(null, "Teste2", "2762323", 123, "Teste", true, user2);
+        Address address7 = new Address(null, "Teste2", "2762323", 123, "Teste", true, user2);
+        Address address8 = new Address(null, "Teste2", "2762323", 123, "Teste", true, user2);
         userRepository.saveAll(Arrays.asList(user, user2));
-        addressRepository.saveAll(Arrays.asList(address2, address, address3));
+        addressRepository.saveAll(Arrays.asList(address2, address, address3, address4, address5, address6, address7, address8));
 
     }
 }

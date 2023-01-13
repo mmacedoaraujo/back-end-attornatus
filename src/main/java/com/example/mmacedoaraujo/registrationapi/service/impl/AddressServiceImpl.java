@@ -5,7 +5,11 @@ import com.example.mmacedoaraujo.registrationapi.domain.User;
 import com.example.mmacedoaraujo.registrationapi.exceptions.AddressNotFoundException;
 import com.example.mmacedoaraujo.registrationapi.repository.AddressRepository;
 import com.example.mmacedoaraujo.registrationapi.service.AddressService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +23,8 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
 
 
-    public List<Address> listAll() {
-        return addressRepository.findAll();
+    public Page<Address> listAll(Pageable pageable) {
+        return addressRepository.findAll(pageable);
     }
 
     @Override
@@ -76,8 +80,9 @@ public class AddressServiceImpl implements AddressService {
         setAsMainAddress(address.getId(), user);
     }
 
-    public List<Address> listMainAddresses() {
-        return addressRepository.listOnlyMainAddress();
+    public Page<Address> listMainAddresses(Pageable pageable) {
+
+        return addressRepository.listOnlyMainAddress(pageable);
     }
 }
 

@@ -1,4 +1,10 @@
 spring:
+  data:
+    web:
+      sort:
+        sort-parameter: sort
+      pageable:
+        default-page-size: 10
   h2:
     console:
       enabled: true
