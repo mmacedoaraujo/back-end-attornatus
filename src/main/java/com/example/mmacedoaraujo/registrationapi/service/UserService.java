@@ -2,16 +2,16 @@ package com.example.mmacedoaraujo.registrationapi.service;
 
 import com.example.mmacedoaraujo.registrationapi.domain.Address;
 import com.example.mmacedoaraujo.registrationapi.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> listAll();
+    Page<User> listAll(Pageable pageable);
 
     User findUserById(Long id);
-
-    List<User> findUserByName(String name);
 
     void updateUser(User userWithChanges);
 

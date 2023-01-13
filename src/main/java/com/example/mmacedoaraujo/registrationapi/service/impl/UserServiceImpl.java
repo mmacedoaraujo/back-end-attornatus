@@ -7,6 +7,8 @@ import com.example.mmacedoaraujo.registrationapi.mapper.UserMapper;
 import com.example.mmacedoaraujo.registrationapi.repository.UserRepository;
 import com.example.mmacedoaraujo.registrationapi.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +22,8 @@ public class UserServiceImpl implements UserService {
     private final AddressServiceImpl addressServiceImpl;
 
     @Override
-    public List<User> listAll() {
-        return userRepository.findAll();
+    public Page<User> listAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override
@@ -30,10 +32,8 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(
                         () -> new UserNotFoundExeption("Não foi possível encontrar um usuário com o seguinte id: " + id));
     }
-
-    @Override
-    public List<User> findUserByName(String name) {
-        return userRepository.findUserByName(name.toUpperCase());
+    public Page<User> findUserByName(Pageable pageable, String name) {
+        return userRepository.findUserByName(pageable, name.toUpperCase());
     }
 
     @Override

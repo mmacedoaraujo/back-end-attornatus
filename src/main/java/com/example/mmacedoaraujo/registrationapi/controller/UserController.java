@@ -5,6 +5,8 @@ import com.example.mmacedoaraujo.registrationapi.domain.User;
 import com.example.mmacedoaraujo.registrationapi.service.impl.AddressServiceImpl;
 import com.example.mmacedoaraujo.registrationapi.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,8 @@ public class UserController {
     private final AddressServiceImpl addressServiceImpl;
 
     @GetMapping
-    public ResponseEntity<List<User>> listAll() {
-        List<User> users = userServiceImpl.listAll();
+    public ResponseEntity<Page<User>> listAll(Pageable pageable) {
+        Page<User> users = userServiceImpl.listAll(pageable);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
 
@@ -36,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping("/findByName/{name}")
-    public ResponseEntity<List<User>> findByName(@PathVariable String name) {
-        List<User> userFoundByUsername = userServiceImpl.findUserByName(name);
+    public ResponseEntity<Page<User>> findByName(Pageable pageable, @PathVariable String name) {
+        Page<User> userFoundByUsername = userServiceImpl.findUserByName(pageable, name);
 
         return new ResponseEntity<>(userFoundByUsername, HttpStatus.OK);
     }
