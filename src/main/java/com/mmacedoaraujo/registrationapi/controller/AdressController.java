@@ -30,9 +30,9 @@ public class AdressController {
     }
 
     @GetMapping("/mainAddress")
-    @Operation(summary = "List only address defined as main addresses",
+    @Operation(summary = "List only addresses defined as main addresses",
             description = "Only returns addresses previously defined as main on the database",
-            tags = {"Person"})
+            tags = {"Address"})
     public ResponseEntity<Page<Address>> listMainAddress(Pageable pageable) {
         Page<Address> addresses = addressService.listMainAddresses(pageable);
 

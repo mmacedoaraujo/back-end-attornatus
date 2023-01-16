@@ -18,7 +18,6 @@ public class EntityCreator {
                 .cidade("cidade")
                 .numero(18)
                 .name("nome")
-                .personId(EntityCreator.createPerson())
                 .enderecoPrincipal(true)
                 .logradouro("logradouro")
                 .birthdate(LocalDate.now())

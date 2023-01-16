@@ -95,8 +95,8 @@ public class AddressServiceImpl implements AddressService {
                 userAndAddressEntity.getCep(),
                 userAndAddressEntity.getNumero(),
                 userAndAddressEntity.getCidade(),
-                userAndAddressEntity.isEnderecoPrincipal(),
-                userAndAddressEntity.getPersonId());
+                userAndAddressEntity.isEnderecoPrincipal()
+                , null);
     }
 
 

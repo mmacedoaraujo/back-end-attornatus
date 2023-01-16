@@ -73,9 +73,10 @@ public class PersonController {
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
-    @PostMapping("/saveNewUser")
+    @PostMapping("/saveNewPerson")
     @Operation(summary = "Saves a new person",
-            description = "A person is always registered with an address and that address will be automatically set as his main address",
+            description = "A person is always registered with an address and that address will be automatically set as his main address." +
+                    " !IMPORTANT! The date should be in this format: dd-mm-yyyy !IMPORTANT!",
             tags = {"Person"})
     public ResponseEntity<Person> saveNewPerson(@RequestBody PersonAddressPostRequestBody personAndAddressEntity) {
         Person savedPerson = personServiceImpl.savePerson(personAndAddressEntity);
