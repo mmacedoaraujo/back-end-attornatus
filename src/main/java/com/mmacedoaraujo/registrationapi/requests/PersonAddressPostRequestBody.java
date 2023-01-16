@@ -25,7 +25,6 @@ public class PersonAddressPostRequestBody {
     @JsonFormat(pattern = "dd-MM-yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
-    private List<Address> addressList;
     private String logradouro;
     private String cep;
     private Integer numero;

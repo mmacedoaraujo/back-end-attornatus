@@ -4,8 +4,8 @@ import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.exceptions.PersonNotFoundExeption;
 import com.mmacedoaraujo.registrationapi.repository.PersonRepository;
-import com.mmacedoaraujo.registrationapi.util.AddressCreator;
-import com.mmacedoaraujo.registrationapi.util.PersonCreator;
+import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.util.EntityCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,20 +38,22 @@ class PersonServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        PageImpl<Person> personPage = new PageImpl<>(List.of(PersonCreator.createPerson(), PersonCreator.createPerson()));
+        PageImpl<Person> personPage = new PageImpl<>(List.of(EntityCreator.createPerson(), EntityCreator.createPerson()));
         BDDMockito.when(personRepository.findAll(ArgumentMatchers.any(PageRequest.class))).thenReturn(personPage);
 
         BDDMockito.when(personRepository.findPersonByName(ArgumentMatchers.any(PageRequest.class), ArgumentMatchers.anyString())).thenReturn(personPage);
 
-        BDDMockito.when(personRepository.findAll()).thenReturn(List.of(PersonCreator.createPerson(), PersonCreator.createPerson(), PersonCreator.createPerson()));
+        BDDMockito.when(personRepository.findAll()).thenReturn(List.of(EntityCreator.createPerson(), EntityCreator.createPerson(), EntityCreator.createPerson()));
 
-        BDDMockito.when(personRepository.findById(1L)).thenReturn(Optional.ofNullable(PersonCreator.createPerson()));
+        BDDMockito.when(personRepository.findById(1L)).thenReturn(Optional.ofNullable(EntityCreator.createPerson()));
+
+        BDDMockito.when(personRepository.save(ArgumentMatchers.any(Person.class))).thenReturn(EntityCreator.createPerson());
     }
 
     @Test
     @DisplayName("listAll return a page of Person when successfull")
     void listAll() {
-        Person validPerson = PersonCreator.createPerson();
+        Person validPerson = EntityCreator.createPerson();
         Page<Person> usersPage = personService.listAll(PageRequest.of(1, 1));
 
         Assertions.assertThat(personService.listAll(PageRequest.of(1, 1))).getClass().equals(Page.class);
@@ -75,7 +77,7 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("findPersonById return a valid Person when successfull")
     void findPersonById() {
-        Person validPerson = PersonCreator.createPerson();
+        Person validPerson = EntityCreator.createPerson();
         Person foundPerson = personService.findPersonById(1L);
 
         Assertions.assertThat(foundPerson)
@@ -100,7 +102,7 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("findePersonByName returns a valid Person when successfull")
     void findPersonByName() {
-        Person validPerson = PersonCreator.createPerson();
+        Person validPerson = EntityCreator.createPerson();
 
         Page<Person> personFound = personService.findPersonByName(PageRequest.of(1, 1), "teste");
 
@@ -127,7 +129,7 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("setMainAddress returns a person when successful")
     void setMainAddress() {
-        Person validPerson = PersonCreator.createPerson();
+        Person validPerson = EntityCreator.createPerson();
 
         Assertions.assertThat(personService.setMainAddress(1L, 1L))
                 .isNotNull()
@@ -165,11 +167,11 @@ class PersonServiceImplTest {
     @DisplayName("saveNewAddress should return a person object when successful")
     void saveNewAddress() {
 
-        Assertions.assertThat(this.personService.saveNewAddress(AddressCreator.createAddress(), 1L))
+        Assertions.assertThat(this.personService.saveNewAddress(EntityCreator.createAddress(), 1L))
                 .isNotNull()
                 .isInstanceOf(Person.class);
 
-        Assertions.assertThatCode(() -> this.personService.saveNewAddress(AddressCreator.createAddress(), 1L)).doesNotThrowAnyException();
+        Assertions.assertThatCode(() -> this.personService.saveNewAddress(EntityCreator.createAddress(), 1L)).doesNotThrowAnyException();
     }
 
     @Test
@@ -177,6 +179,30 @@ class PersonServiceImplTest {
     void deletePersonAddressById() {
 
         Assertions.assertThatCode(() -> this.personService.deletePersonAddressById(1L, 1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("savePerson returns a Person object with address added to it when successful")
+    void savePerson() {
+        PersonAddressPostRequestBody personAddressPostRequestBody = EntityCreator.createPersonAddressPostRequestBody();
+
+        Assertions.assertThatCode(() -> this.personService.savePerson(personAddressPostRequestBody))
+                .doesNotThrowAnyException();
+
+        Assertions.assertThat(this.personService.savePerson(personAddressPostRequestBody))
+                .isNotNull()
+                .isInstanceOf(Person.class);
+
+        Assertions.assertThat(this.personService.savePerson(personAddressPostRequestBody).getAddressList())
+                .isNotNull()
+                .isNotEmpty()
+                .isInstanceOf(List.class);
+
+        Assertions.assertThat(this.personService.savePerson(personAddressPostRequestBody).getAddressList().get(0))
+                .isNotNull()
+                .isInstanceOf(Address.class);
+
+
     }
 
 

@@ -90,7 +90,6 @@ public class PersonServiceImpl implements PersonService {
         Person newPerson = separateEntityPerson(userAndAddressEntity);
         Address addressFromRequest = addressServiceImpl.separateAddressFromRequest(userAndAddressEntity);
         Person savedPerson = personRepository.save(newPerson);
-        savedPerson.getAddressList().add(addressFromRequest);
         saveNewAddress(addressFromRequest, savedPerson.getId());
 
         return savedPerson;
