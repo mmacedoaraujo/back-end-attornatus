@@ -2,7 +2,7 @@ package com.mmacedoaraujo.registrationapi.service.impl;
 
 import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
-import com.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExeption;
+import com.mmacedoaraujo.registrationapi.exceptions.PersonNotFoundExeption;
 import com.mmacedoaraujo.registrationapi.mapper.UserMapper;
 import com.mmacedoaraujo.registrationapi.repository.PersonRepository;
 import com.mmacedoaraujo.registrationapi.requests.UserAddressPostRequestBody;
@@ -32,7 +32,7 @@ public class PersonServiceImpl implements PersonService {
     public Person findPersonById(Long id) {
         return personRepository.findById(id)
                 .orElseThrow(
-                        () -> new UserNotFoundExeption("Não foi possível encontrar um usuário com o seguinte id: " + id));
+                        () -> new PersonNotFoundExeption("Não foi possível encontrar um usuário com o seguinte id: " + id));
     }
 
     public Page<Person> findPersonByName(Pageable pageable, String name) {

@@ -11,7 +11,7 @@ public class AddressCreator {
                 .cidade("cidade")
                 .numero(00)
                 .logradouro("logradouro")
-                .personId(UserCreator.createUser())
+                .personId(PersonCreator.createPerson())
                 .enderecoPrincipal(true)
                 .build();
     }

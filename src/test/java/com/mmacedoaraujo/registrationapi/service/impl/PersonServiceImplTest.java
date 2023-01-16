@@ -1,9 +1,9 @@
 package com.mmacedoaraujo.registrationapi.service.impl;
 
 import com.mmacedoaraujo.registrationapi.domain.Person;
-import com.mmacedoaraujo.registrationapi.exceptions.UserNotFoundExeption;
+import com.mmacedoaraujo.registrationapi.exceptions.PersonNotFoundExeption;
 import com.mmacedoaraujo.registrationapi.repository.PersonRepository;
-import com.mmacedoaraujo.registrationapi.util.UserCreator;
+import com.mmacedoaraujo.registrationapi.util.PersonCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,18 +32,20 @@ class PersonServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        PageImpl<Person> personPage = new PageImpl<>(List.of(UserCreator.createUser(), UserCreator.createUser()));
+        PageImpl<Person> personPage = new PageImpl<>(List.of(PersonCreator.createPerson(), PersonCreator.createPerson()));
         BDDMockito.when(personRepository.findAll(ArgumentMatchers.any(PageRequest.class))).thenReturn(personPage);
 
-        BDDMockito.when(personRepository.findAll()).thenReturn(List.of(UserCreator.createUser(), UserCreator.createUser(), UserCreator.createUser()));
+        BDDMockito.when(personRepository.findPersonByName(ArgumentMatchers.any(PageRequest.class), ArgumentMatchers.anyString())).thenReturn(personPage);
 
-        BDDMockito.when(personRepository.findById(1L)).thenReturn(Optional.ofNullable(UserCreator.createUser()));
+        BDDMockito.when(personRepository.findAll()).thenReturn(List.of(PersonCreator.createPerson(), PersonCreator.createPerson(), PersonCreator.createPerson()));
+
+        BDDMockito.when(personRepository.findById(1L)).thenReturn(Optional.ofNullable(PersonCreator.createPerson()));
     }
 
     @Test
     @DisplayName("listAll return a page of Person when successfull")
     void listAll_ReturnsListOfPersonInsidePageObject_WhenSuccessful() {
-        Person validPerson = UserCreator.createUser();
+        Person validPerson = PersonCreator.createPerson();
         Page<Person> usersPage = personService.listAll(PageRequest.of(1, 1));
 
         Assertions.assertThat(personService.listAll(PageRequest.of(1, 1))).getClass().equals(Page.class);
@@ -65,9 +67,9 @@ class PersonServiceImplTest {
     }
 
     @Test
-    @DisplayName("findUserById return a valid Person when successfull")
+    @DisplayName("findPersonById return a valid Person when successfull")
     void findPersonById_ReturnsAValidUser_WhenSuccessful() {
-        Person validPerson = UserCreator.createUser();
+        Person validPerson = PersonCreator.createPerson();
         Person foundPerson = personService.findPersonById(1L);
 
         Assertions.assertThat(foundPerson)
@@ -80,12 +82,31 @@ class PersonServiceImplTest {
     }
 
     @Test
-    @DisplayName("findUserById throws UserNotFoundException when user id does not exist")
+    @DisplayName("findPersonById throws UserNotFoundException when user id does not exist")
     void findUserById_ThrowsException_WhenUserDoesNotExist() {
         BDDMockito.when(personRepository.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.empty());
 
-        Assertions.assertThatExceptionOfType(UserNotFoundExeption.class)
+        Assertions.assertThatExceptionOfType(PersonNotFoundExeption.class)
                 .isThrownBy(() -> this.personService.findPersonById(ArgumentMatchers.anyLong()));
+    }
+
+    @Test
+    @DisplayName("findePersonByName returns a valid Person when successfull")
+    void findPersonByName_WhenSuccessful() {
+        Person validPerson = PersonCreator.createPerson();
+
+        Page<Person> personFound = personService.findPersonByName(PageRequest.of(1, 1), "teste");
+
+        Assertions.assertThat(personFound)
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(2);
+
+        Assertions.assertThat(personFound.toList().get(0).getId())
+                .isEqualTo(validPerson.getId());
+
+        Assertions.assertThat(personFound.toList().get(0).getName())
+                .isEqualTo(validPerson.getName());
     }
 }

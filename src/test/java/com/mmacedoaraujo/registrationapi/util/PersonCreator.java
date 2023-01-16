@@ -4,9 +4,9 @@ import com.mmacedoaraujo.registrationapi.domain.Person;
 
 import java.time.LocalDate;
 
-public class UserCreator {
+public class PersonCreator {
 
-    public static Person createUser() {
+    public static Person createPerson() {
         return Person.builder()
                 .id(1L)
                 .name("Teste")

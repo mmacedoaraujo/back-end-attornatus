@@ -5,6 +5,6 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-public class UserNotFoundExceptionDetails extends ExceptionDetails {
+public class PersonNotFoundExceptionDetails extends ExceptionDetails {
 
 }
