@@ -2,7 +2,7 @@ package com.mmacedoaraujo.registrationapi.controller;
 
 import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
-import com.mmacedoaraujo.registrationapi.requests.UserAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
 import com.mmacedoaraujo.registrationapi.service.impl.AddressServiceImpl;
 import com.mmacedoaraujo.registrationapi.service.impl.PersonServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +59,7 @@ public class PersonController {
     }
 
     @PostMapping("/saveNewUser")
-    public ResponseEntity<Person> saveNewPerson(@RequestBody UserAddressPostRequestBody userAndAddressEntity) {
+    public ResponseEntity<Person> saveNewPerson(@RequestBody PersonAddressPostRequestBody userAndAddressEntity) {
         Person savedPerson = personServiceImpl.savePerson(userAndAddressEntity);
 
         return new ResponseEntity<>(savedPerson, HttpStatus.CREATED);

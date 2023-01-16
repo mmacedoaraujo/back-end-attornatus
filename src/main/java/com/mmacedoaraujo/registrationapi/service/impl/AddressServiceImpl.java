@@ -5,7 +5,7 @@ import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.exceptions.AddressNotFoundException;
 import com.mmacedoaraujo.registrationapi.mapper.AddressMapper;
 import com.mmacedoaraujo.registrationapi.repository.AddressRepository;
-import com.mmacedoaraujo.registrationapi.requests.UserAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
 import com.mmacedoaraujo.registrationapi.service.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -90,7 +90,7 @@ public class AddressServiceImpl implements AddressService {
         setAsMainAddress(address.getId(), person);
     }
 
-    public Address separateAddressFromRequest(UserAddressPostRequestBody userAndAddressEntity) {
+    public Address separateAddressFromRequest(PersonAddressPostRequestBody userAndAddressEntity) {
         return new Address(null, userAndAddressEntity.getLogradouro(),
                 userAndAddressEntity.getCep(),
                 userAndAddressEntity.getNumero(),

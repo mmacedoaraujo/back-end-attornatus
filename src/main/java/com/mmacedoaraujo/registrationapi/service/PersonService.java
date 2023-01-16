@@ -2,7 +2,7 @@ package com.mmacedoaraujo.registrationapi.service;
 
 import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
-import com.mmacedoaraujo.registrationapi.requests.UserAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -26,5 +26,5 @@ public interface PersonService {
 
     void deletePersonAddressById(Long userId, Long addressId);
 
-    Person savePerson(UserAddressPostRequestBody userAndAddressEntity);
+    Person savePerson(PersonAddressPostRequestBody userAndAddressEntity);
 }

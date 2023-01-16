@@ -5,7 +5,7 @@ import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.exceptions.PersonNotFoundExeption;
 import com.mmacedoaraujo.registrationapi.mapper.UserMapper;
 import com.mmacedoaraujo.registrationapi.repository.PersonRepository;
-import com.mmacedoaraujo.registrationapi.requests.UserAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
 import com.mmacedoaraujo.registrationapi.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -43,6 +43,7 @@ public class PersonServiceImpl implements PersonService {
     public void updatePerson(Person requestPerson) {
         Person entityPerson = findPersonById(requestPerson.getId());
         Person updatedPerson = UserMapper.INSTANCE.mapRequestToEntity(requestPerson, entityPerson);
+        updatedPerson.setId(entityPerson.getId());
 
         personRepository.save(updatedPerson);
 
@@ -85,8 +86,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person savePerson(UserAddressPostRequestBody userAndAddressEntity) {
-        Person newPerson = separateEnityUser(userAndAddressEntity);
+    public Person savePerson(PersonAddressPostRequestBody userAndAddressEntity) {
+        Person newPerson = separateEntityPerson(userAndAddressEntity);
         Address addressFromRequest = addressServiceImpl.separateAddressFromRequest(userAndAddressEntity);
         Person savedPerson = personRepository.save(newPerson);
         savedPerson.getAddressList().add(addressFromRequest);
@@ -96,7 +97,7 @@ public class PersonServiceImpl implements PersonService {
 
     }
 
-    private Person separateEnityUser(UserAddressPostRequestBody userAndAddressEntity) {
+    private Person separateEntityPerson (PersonAddressPostRequestBody userAndAddressEntity) {
         return new Person(null, userAndAddressEntity.getName(), userAndAddressEntity.getBirthdate(), new ArrayList<>());
     }
 

@@ -19,7 +19,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAddressPostRequestBody {
+public class PersonAddressPostRequestBody {
 
     private String name;
     @JsonFormat(pattern = "dd-MM-yyyy")
