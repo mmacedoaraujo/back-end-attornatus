@@ -1,5 +1,6 @@
 package com.mmacedoaraujo.registrationapi.service.impl;
 
+import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.exceptions.PersonNotFoundExeption;
 import com.mmacedoaraujo.registrationapi.repository.PersonRepository;
@@ -118,7 +119,7 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("updatePerson changes information on entity when successful")
     void updatePerson() {
-        Person test = new Person(null, "test", LocalDate.now(), null);
+        Person test = new Person(1L, "test", LocalDate.now(), null);
 
         Assertions.assertThatCode(() -> this.personService.updatePerson(test)).doesNotThrowAnyException();
     }
@@ -142,10 +143,43 @@ class PersonServiceImplTest {
         Assertions.assertThat(this.personService.listAllPersonAddresses(1L))
                 .isNotNull()
                 .isNotEmpty()
-                .hasSize(3);
+                .hasSize(3)
+                .isInstanceOf(List.class);
 
         Assertions.assertThatCode(() -> this.personService.listAllPersonAddresses(1L)).doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("getPersonMainAddress return an object of type Address with enderecoPrincipal setted to true")
+    void getPersonMainAddress() {
+
+        Assertions.assertThat(this.personService.getPersonMainAddress(1L))
+                .isNotNull()
+                .isInstanceOf(Address.class);
+
+        Assertions.assertThat(this.personService.getPersonMainAddress(1L).isEnderecoPrincipal())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("saveNewAddress should return a person object when successful")
+    void saveNewAddress() {
+
+        Assertions.assertThat(this.personService.saveNewAddress(AddressCreator.createAddress(), 1L))
+                .isNotNull()
+                .isInstanceOf(Person.class);
+
+        Assertions.assertThatCode(() -> this.personService.saveNewAddress(AddressCreator.createAddress(), 1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("deletePersonAddressById")
+    void deletePersonAddressById() {
+
+        Assertions.assertThatCode(() -> this.personService.deletePersonAddressById(1L, 1L)).doesNotThrowAnyException();
+    }
+
+
 
 
 }
