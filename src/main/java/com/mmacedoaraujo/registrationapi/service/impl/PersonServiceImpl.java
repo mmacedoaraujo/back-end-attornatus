@@ -6,6 +6,7 @@ import com.mmacedoaraujo.registrationapi.exceptions.PersonNotFoundExeption;
 import com.mmacedoaraujo.registrationapi.mapper.UserMapper;
 import com.mmacedoaraujo.registrationapi.repository.PersonRepository;
 import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.requests.PersonPutRequestBody;
 import com.mmacedoaraujo.registrationapi.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void updatePerson(Person requestPerson) {
+    public void updatePerson(PersonPutRequestBody requestPerson) {
         Person entityPerson = findPersonById(requestPerson.getId());
         Person updatedPerson = UserMapper.INSTANCE.mapRequestToEntity(requestPerson, entityPerson);
         updatedPerson.setId(entityPerson.getId());

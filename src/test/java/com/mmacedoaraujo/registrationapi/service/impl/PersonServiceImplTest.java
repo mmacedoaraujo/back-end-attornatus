@@ -5,6 +5,7 @@ import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.exceptions.PersonNotFoundExeption;
 import com.mmacedoaraujo.registrationapi.repository.PersonRepository;
 import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.requests.PersonPutRequestBody;
 import com.mmacedoaraujo.registrationapi.util.EntityCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,7 +121,7 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("updatePerson changes information on entity when successful")
     void updatePerson() {
-        Person test = new Person(1L, "test", LocalDate.now(), null);
+        PersonPutRequestBody test = EntityCreator.createPersonPutRequestBody();
 
         Assertions.assertThatCode(() -> this.personService.updatePerson(test)).doesNotThrowAnyException();
     }

@@ -1,6 +1,7 @@
 package com.mmacedoaraujo.registrationapi.mapper;
 
 import com.mmacedoaraujo.registrationapi.domain.Person;
+import com.mmacedoaraujo.registrationapi.requests.PersonPutRequestBody;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -11,5 +12,5 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    Person mapRequestToEntity(Person requestPerson, @MappingTarget Person entityPerson);
+    Person mapRequestToEntity(PersonPutRequestBody requestPerson, @MappingTarget Person entityPerson);
 }

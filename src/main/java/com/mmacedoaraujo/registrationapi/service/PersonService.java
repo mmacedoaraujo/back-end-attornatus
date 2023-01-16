@@ -3,6 +3,7 @@ package com.mmacedoaraujo.registrationapi.service;
 import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.requests.PersonPutRequestBody;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,7 +15,7 @@ public interface PersonService {
 
     Person findPersonById(Long id);
 
-    void updatePerson(Person personWithChanges);
+    void updatePerson(PersonPutRequestBody personWithChanges);
 
     Person setMainAddress(Long userId, Long addressId);
 

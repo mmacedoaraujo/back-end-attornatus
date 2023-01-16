@@ -3,6 +3,7 @@ package com.mmacedoaraujo.registrationapi.util;
 import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.requests.PersonPutRequestBody;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -42,6 +43,14 @@ public class EntityCreator {
                 .name("Teste")
                 .birthdate(LocalDate.now())
                 .addressList(List.of(EntityCreator.createAddress(), EntityCreator.createAddress(), EntityCreator.createAddress()))
+                .build();
+    }
+
+    public static PersonPutRequestBody createPersonPutRequestBody() {
+        return PersonPutRequestBody.builder()
+                .name("Teste")
+                .birthdate(LocalDate.now())
+                .id(1L)
                 .build();
     }
 }

@@ -1,9 +1,8 @@
 package com.mmacedoaraujo.registrationapi.requests;
 
-import com.mmacedoaraujo.registrationapi.domain.Address;
-import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.mmacedoaraujo.registrationapi.domain.Person;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Builder
