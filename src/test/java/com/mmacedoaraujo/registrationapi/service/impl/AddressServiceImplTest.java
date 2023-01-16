@@ -1,8 +1,10 @@
 package com.mmacedoaraujo.registrationapi.service.impl;
 
 import com.mmacedoaraujo.registrationapi.domain.Address;
+import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.mapper.AddressMapper;
 import com.mmacedoaraujo.registrationapi.repository.AddressRepository;
+import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
 import com.mmacedoaraujo.registrationapi.util.EntityCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +20,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class AddressServiceImplTest {
@@ -42,6 +49,8 @@ class AddressServiceImplTest {
                 .listOnlyMainAddress(ArgumentMatchers.any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(EntityCreator.createAddress())));
 
         BDDMockito.when(addressRepository.save(ArgumentMatchers.any(Address.class))).thenReturn(EntityCreator.createAddress());
+
+        BDDMockito.when(addressRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.of(EntityCreator.createAddress()));
     }
 
     @Test
@@ -89,26 +98,94 @@ class AddressServiceImplTest {
         Assertions.assertThat(this.addressService.saveAddress(savedAddress).getId())
                 .isEqualTo(validAddress.getId());
 
+        Assertions.assertThat(this.addressService.saveAddress(savedAddress).getLogradouro())
+                .isEqualTo(validAddress.getLogradouro());
+
 
     }
 
     @Test
     void setAsMainAddress() {
+        AddressServiceImpl addressServiceMock = mock(AddressServiceImpl.class);
+
+        doNothing().when(addressServiceMock).setAsMainAddress(anyLong(), any(Person.class));
+        addressServiceMock.setAsMainAddress(1L, EntityCreator.createPerson());
+
+        verify(addressServiceMock, times(1)).setAsMainAddress(1L, EntityCreator.createPerson());
     }
 
     @Test
     void saveNewAddress() {
+        Person validPerson = EntityCreator.createPerson();
+        Address validAdress = EntityCreator.createAddress();
+
+        Address savedAddress = this.addressService.saveNewAddress(validAdress, validPerson);
+
+        Assertions.assertThat(savedAddress)
+                .isNotNull()
+                .isInstanceOf(Address.class)
+                .isEqualTo(validAdress);
+
+        Assertions.assertThat(savedAddress.getId())
+                .isEqualTo(validAdress.getId());
+
+        Assertions.assertThat(savedAddress.getLogradouro())
+                .isEqualTo(validAdress.getLogradouro());
+
     }
 
     @Test
     void deleteAddress() {
+
+        AddressServiceImpl addressServiceMock = mock(AddressServiceImpl.class);
+
+        doNothing().when(addressServiceMock).deleteAddress(anyLong(), any(Person.class));
+
+        addressServiceMock.deleteAddress(1L, EntityCreator.createPerson());
+
+        verify(addressServiceMock, times(1)).deleteAddress(1L, EntityCreator.createPerson());
     }
 
     @Test
     void findById() {
+        Person validPerson = EntityCreator.createPerson();
+        Address validAdress = EntityCreator.createAddress();
+
+        Address foundAddress = this.addressService.findById(1L);
+
+        Assertions.assertThat(foundAddress)
+                .isNotNull()
+                .isInstanceOf(Address.class)
+                .isEqualTo(validAdress);
+
+        Assertions.assertThat(foundAddress.getId())
+                .isEqualTo(validAdress.getId());
+
+        Assertions.assertThat(foundAddress.getLogradouro())
+                .isEqualTo(validAdress.getLogradouro());
     }
 
     @Test
     void separateAddressFromRequest() {
+        PersonAddressPostRequestBody testEntity = EntityCreator.createPersonAddressPostRequestBody();
+
+        Address separateAddressFromRequest = this.addressService.separateAddressFromRequest(EntityCreator.createPersonAddressPostRequestBody());
+
+        Assertions.assertThat(separateAddressFromRequest)
+                .isNotNull()
+                .isInstanceOf(Address.class);
+
+        Assertions.assertThat(separateAddressFromRequest.getLogradouro())
+                .isEqualTo(testEntity.getLogradouro());
+
+        Assertions.assertThat(separateAddressFromRequest.getCep())
+                .isEqualTo(testEntity.getCep());
+
+        Assertions.assertThat(separateAddressFromRequest.getCidade())
+                .isEqualTo(testEntity.getCidade());
+
+        Assertions.assertThat(separateAddressFromRequest.getNumero())
+                .isEqualTo(testEntity.getNumero());
+
     }
 }
