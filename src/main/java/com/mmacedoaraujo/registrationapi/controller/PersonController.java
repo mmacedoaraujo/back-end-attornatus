@@ -5,7 +5,10 @@ import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
 import com.mmacedoaraujo.registrationapi.service.impl.AddressServiceImpl;
 import com.mmacedoaraujo.registrationapi.service.impl.PersonServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,7 +27,8 @@ public class PersonController {
     private final AddressServiceImpl addressServiceImpl;
 
     @GetMapping
-    public ResponseEntity<Page<Person>> listAll(Pageable pageable) {
+    @Operation(summary = "List all persons registered", tags = {"Person"})
+    public ResponseEntity<Page<Person>> listAll(@ParameterObject Pageable pageable) {
         Page<Person> users = personServiceImpl.listAll(pageable);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -39,6 +43,8 @@ public class PersonController {
     }
 
     @GetMapping("/findByName/{name}")
+    @Operation(summary = "List all users found by name specified", description = "The default size is 20, use the parameter size to change the default value",
+    tags = {"Person"})
     public ResponseEntity<Page<Person>> findByName(Pageable pageable, @PathVariable String name) {
         Page<Person> userFoundByUsername = personServiceImpl.findPersonByName(pageable, name);
 
