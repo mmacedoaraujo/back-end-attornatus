@@ -87,7 +87,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person savePerson(PersonAddressPostRequestBody userAndAddressEntity) {
-        Person newPerson = separateEntityPerson(userAndAddressEntity);
+        Person newPerson = separateEntityFromPersonAddressRequestBody(userAndAddressEntity);
         Address addressFromRequest = addressServiceImpl.separateAddressFromRequest(userAndAddressEntity);
         Person savedPerson = personRepository.save(newPerson);
         saveNewAddress(addressFromRequest, savedPerson.getId());
@@ -96,7 +96,7 @@ public class PersonServiceImpl implements PersonService {
 
     }
 
-    private Person separateEntityPerson (PersonAddressPostRequestBody userAndAddressEntity) {
+    private Person separateEntityFromPersonAddressRequestBody(PersonAddressPostRequestBody userAndAddressEntity) {
         return new Person(null, userAndAddressEntity.getName(), userAndAddressEntity.getBirthdate(), new ArrayList<>());
     }
 

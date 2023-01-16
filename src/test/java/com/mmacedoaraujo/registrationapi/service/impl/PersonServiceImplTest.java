@@ -175,7 +175,7 @@ class PersonServiceImplTest {
     }
 
     @Test
-    @DisplayName("deletePersonAddressById")
+    @DisplayName("delete a person when successful")
     void deletePersonAddressById() {
 
         Assertions.assertThatCode(() -> this.personService.deletePersonAddressById(1L, 1L)).doesNotThrowAnyException();
@@ -204,8 +204,5 @@ class PersonServiceImplTest {
 
 
     }
-
-
-
 
 }
