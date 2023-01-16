@@ -17,15 +17,15 @@ public interface PersonService {
 
     void updatePerson(PersonPutRequestBody personWithChanges);
 
-    Person setMainAddress(Long userId, Long addressId);
+    Person setMainAddress(Long personId, Long addressId);
 
-    List<Address> listAllPersonAddresses(Long userId);
+    List<Address> listAllPersonAddresses(Long personId);
 
     Address getPersonMainAddress(Long userId);
 
-    Person saveNewAddress(Address address, Long userId);
+    Person saveNewAddress(Address address, Long personId);
 
-    void deletePersonAddressById(Long userId, Long addressId);
+    void deletePersonAddressById(Long personId, Long addressId);
 
     Person savePerson(PersonAddressPostRequestBody userAndAddressEntity);
 }

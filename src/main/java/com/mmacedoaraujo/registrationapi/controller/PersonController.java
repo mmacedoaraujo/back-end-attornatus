@@ -94,11 +94,11 @@ public class PersonController {
         return new ResponseEntity<>(person, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/deleteUserAddress/{personId}/{addressId}")
+    @DeleteMapping("/deletePersonAddress/{personId}/{addressId}")
     @Operation(summary = "Deletes a person's address from the database",
             description = "Receives a person id and one address id, if the person found has one address with the specified address id, the method will delete it",
             tags = {"Person"})
-    public ResponseEntity<Void> deleteUserAddress(@PathVariable Long personId, @PathVariable Long addressId) {
+    public ResponseEntity<Void> deletePersonAddress(@PathVariable Long personId, @PathVariable Long addressId) {
         personServiceImpl.deletePersonAddressById(personId, addressId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

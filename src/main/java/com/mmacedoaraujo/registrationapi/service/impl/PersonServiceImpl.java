@@ -58,8 +58,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Address> listAllPersonAddresses(Long userId) {
-        return findPersonById(userId).getAddressList();
+    public List<Address> listAllPersonAddresses(Long personId) {
+        return findPersonById(personId).getAddressList();
     }
 
     @Override
@@ -73,8 +73,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person saveNewAddress(Address address, Long userId) {
-        Person personFoundById = findPersonById(userId);
+    public Person saveNewAddress(Address address, Long personId) {
+        Person personFoundById = findPersonById(personId);
         addressServiceImpl.saveNewAddress(address, personFoundById);
 
         return personFoundById;
