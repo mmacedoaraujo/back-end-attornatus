@@ -40,4 +40,8 @@ Ao implementar uma nova funcionalidade, para garantirmos a qualidade de software
 - Métricas acionáveis: Uma análise de qualidade de software deve ser acionável, ou seja, inspirar ações corretivas no nível necessário a fim de proporcionar as melhorias esperadas.
 - Automação do processo: Analisar a qualidade de software não deve ser um processo manual. Por exigir atenção extrema, repetições exaustivas e assiduidade, pode acabar comprometendo a produtividade de quem tentar fazê-la dessa forma.
 
+### Questão 2:
+
+Acredito que em todas as etapas são necessários levarmos em consideração a qualidade de software, para produzirmos produtos mais robustos, confiáveis e de grande eficiência.
+
 
