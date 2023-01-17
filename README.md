@@ -30,6 +30,11 @@ Caso o link acima não funcione, basta pesquisar por:
 
 ![image](https://user-images.githubusercontent.com/103322548/212992048-688ec335-7e24-4c2d-8799-b036cf04fef3.png)
 
+## Testes realizados:
+
+![image](https://user-images.githubusercontent.com/103322548/212995287-f237c94a-7c24-49e6-ba02-d0094f86eb52.png)
+
+
 
 
 
