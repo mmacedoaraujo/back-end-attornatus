@@ -2,6 +2,7 @@ package com.mmacedoaraujo.registrationapi.controller;
 
 import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
+import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
 import com.mmacedoaraujo.registrationapi.service.impl.PersonServiceImpl;
 import com.mmacedoaraujo.registrationapi.util.EntityCreator;
 import org.assertj.core.api.Assertions;
@@ -20,6 +21,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyLong;
+
 @ExtendWith(SpringExtension.class)
 public class PersonControllerTest {
 
@@ -27,6 +30,7 @@ public class PersonControllerTest {
     private PersonController personController;
     @Mock
     private PersonServiceImpl personService;
+
 
     @BeforeEach
     void setUp() {
@@ -37,11 +41,19 @@ public class PersonControllerTest {
 
         BDDMockito.when(personService.listAll(ArgumentMatchers.any())).thenReturn(personPage);
 
-        BDDMockito.when(personService.findPersonById(ArgumentMatchers.anyLong())).thenReturn(person);
+        BDDMockito.when(personService.findPersonById(anyLong())).thenReturn(person);
 
         BDDMockito.when(personService.findPersonByName(ArgumentMatchers.any(), ArgumentMatchers.anyString())).thenReturn(personPage);
 
-        BDDMockito.when(personService.getPersonMainAddress(ArgumentMatchers.anyLong())).thenReturn(EntityCreator.createAddress());
+        BDDMockito.when(personService.getPersonMainAddress(anyLong())).thenReturn(EntityCreator.createAddress());
+
+        BDDMockito.when(personService.listAllPersonAddresses(anyLong())).thenReturn(List.of(EntityCreator.createAddress()));
+
+        BDDMockito.when(personService.savePerson(ArgumentMatchers.any(PersonAddressPostRequestBody.class))).thenReturn(EntityCreator.createPerson());
+
+        BDDMockito.when(personService.saveNewAddress(ArgumentMatchers.any(Address.class), anyLong())).thenReturn(EntityCreator.createPerson());
+
+        BDDMockito.when(personService.setMainAddress(anyLong(), anyLong())).thenReturn(EntityCreator.createPerson());
     }
 
     @Test
@@ -108,6 +120,112 @@ public class PersonControllerTest {
                 .isEqualTo(address);
 
         Assertions.assertThatCode(() -> this.personController.mainAddress(1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void allAddresses() {
+        Address comparisonAddress = EntityCreator.createAddress();
+
+        List<Address> personList = personController.allAddresses(1L).getBody();
+
+        Assertions.assertThat(personList)
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(1);
+
+        Assertions.assertThat(personList.get(0).getNumero())
+                .isEqualTo(comparisonAddress.getNumero());
+
+        Assertions.assertThat(personList.get(0).getCidade())
+                .isEqualTo(comparisonAddress.getCidade());
+
+        Assertions.assertThat(personList.get(0).getPersonId())
+                .isEqualTo(comparisonAddress.getPersonId());
+    }
+
+    @Test
+    void saveNewPerson() {
+        Person comparisonPerson = EntityCreator.createPerson();
+
+        Person personFromController = personController.saveNewPerson(EntityCreator.createPersonAddressPostRequestBody()).getBody();
+
+        Assertions.assertThat(personFromController)
+                .isNotNull()
+                .isInstanceOf(Person.class)
+                .isEqualTo(comparisonPerson);
+
+        Assertions.assertThat(personFromController.getId())
+                .isEqualTo(comparisonPerson.getId());
+
+        Assertions.assertThat(personFromController.getName())
+                .isEqualTo(comparisonPerson.getName());
+
+        Assertions.assertThat(personFromController.getBirthdate())
+                .isEqualTo(comparisonPerson.getBirthdate());
+
+        Assertions.assertThat(personFromController.getAddressList())
+                .isEqualTo(comparisonPerson.getAddressList());
+    }
+
+    @Test
+    void addNewAddress() {
+        Person comparisonPerson = EntityCreator.createPerson();
+
+        Person personFromController = personController.addNewAddress(EntityCreator.createAddress(), 1L).getBody();
+
+        Assertions.assertThat(personFromController)
+                .isNotNull()
+                .isInstanceOf(Person.class)
+                .isEqualTo(comparisonPerson);
+
+        Assertions.assertThat(personFromController.getId())
+                .isEqualTo(comparisonPerson.getId());
+
+        Assertions.assertThat(personFromController.getName())
+                .isEqualTo(comparisonPerson.getName());
+
+        Assertions.assertThat(personFromController.getBirthdate())
+                .isEqualTo(comparisonPerson.getBirthdate());
+
+        Assertions.assertThat(personFromController.getAddressList())
+                .isEqualTo(comparisonPerson.getAddressList());
+    }
+
+    @Test
+    void deletePersonAddress() {
+
+        Assertions.assertThatCode(() -> personController.deletePersonAddress(1L, 1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void updatePerson() {
+
+        Assertions.assertThatCode(() -> personController.updateUser(EntityCreator.createPersonPutRequestBody())).doesNotThrowAnyException();
+    }
+
+    @Test
+    void setMainAddress() {
+        Person comparisonPerson = EntityCreator.createPerson();
+
+        Person personFromController = personController.setMainAddress(1L, 1L).getBody();
+
+        Assertions.assertThat(personFromController)
+                .isNotNull()
+                .isInstanceOf(Person.class)
+                .isEqualTo(comparisonPerson);
+
+        Assertions.assertThat(personFromController.getId())
+                .isEqualTo(comparisonPerson.getId());
+
+        Assertions.assertThat(personFromController.getName())
+                .isEqualTo(comparisonPerson.getName());
+
+        Assertions.assertThat(personFromController.getBirthdate())
+                .isEqualTo(comparisonPerson.getBirthdate());
+
+        Assertions.assertThat(personFromController.getAddressList())
+                .isEqualTo(comparisonPerson.getAddressList());
+
     }
 
 }
