@@ -3,6 +3,7 @@ package com.mmacedoaraujo.registrationapi.integration;
 import com.mmacedoaraujo.registrationapi.domain.Address;
 import com.mmacedoaraujo.registrationapi.domain.Person;
 import com.mmacedoaraujo.registrationapi.repository.PersonRepository;
+import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
 import com.mmacedoaraujo.registrationapi.util.EntityCreator;
 import com.mmacedoaraujo.registrationapi.wrapper.PageableResponse;
 import org.assertj.core.api.Assertions;
@@ -112,17 +113,6 @@ public class PersonControllerIT {
     }
 
     @Test
-    @Disabled
-    void mainAddress() {
-        Person savedPerson = personRepository.save(EntityCreator.createPerson());
-
-        Address foundAddress = testRestTemplate.getForObject("/persons/getMainAddress/{id}", Address.class, savedPerson.getId());
-
-        Assertions.assertThat(foundAddress)
-                .isNotNull();
-    }
-
-    @Test
     void updateUser() {
         Person savedPerson = personRepository.save(EntityCreator.createPerson());
 
@@ -141,13 +131,39 @@ public class PersonControllerIT {
     void deletePersonAddress() {
         Person savedPerson = personRepository.save(EntityCreator.createPerson());
 
-        ResponseEntity<Void> animeResponseEntity = testRestTemplate.exchange("/persons/deletePersonAddress/{personId}/{addressId}",
+        ResponseEntity<Void> personResponseEntity = testRestTemplate.exchange("/persons/deletePersonAddress/{personId}/{addressId}",
                 HttpMethod.DELETE,
                 null,
                 Void.class,
                 1L, 1L);
 
-        Assertions.assertThat(animeResponseEntity).isNotNull();
-        Assertions.assertThat(animeResponseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        Assertions.assertThat(personResponseEntity).isNotNull();
+        Assertions.assertThat(personResponseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    void setMainAddress() {
+        Person savedPerson = personRepository.save(EntityCreator.createPerson());
+        String url = "/persons/setMainAddress?userId=1&addressId=1";
+        ResponseEntity<Person> personWithMainAddressSetted = testRestTemplate.exchange(url,
+                HttpMethod.PUT,
+                null,
+                Person.class);
+
+        Assertions.assertThat(personWithMainAddressSetted).isNotNull();
+        Assertions.assertThat(personWithMainAddressSetted.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    void saveNewPerson() {
+        PersonAddressPostRequestBody personAddressPostRequestBody = EntityCreator.createPersonAddressPostRequestBody();
+
+        ResponseEntity<Person> personResponseEntity = testRestTemplate.postForEntity("/persons/saveNewPerson", personAddressPostRequestBody, Person.class);
+
+
+        Assertions.assertThat(personResponseEntity).isNotNull();
+        Assertions.assertThat(personResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        Assertions.assertThat(personResponseEntity.getBody()).isNotNull();
+        Assertions.assertThat(personResponseEntity.getBody().getId()).isNotNull();
     }
 }

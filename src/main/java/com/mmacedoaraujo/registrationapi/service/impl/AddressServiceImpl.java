@@ -6,6 +6,7 @@ import com.mmacedoaraujo.registrationapi.exceptions.AddressNotFoundException;
 import com.mmacedoaraujo.registrationapi.mapper.AddressMapper;
 import com.mmacedoaraujo.registrationapi.repository.AddressRepository;
 import com.mmacedoaraujo.registrationapi.requests.PersonAddressPostRequestBody;
+import com.mmacedoaraujo.registrationapi.resttemplate.JsonRestTemplate;
 import com.mmacedoaraujo.registrationapi.service.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
