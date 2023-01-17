@@ -29,4 +29,15 @@ docker run -p 8080:8080 mmacedoaraujo/person-address-api:latest
 
 ### Questão 1:
 
+Ao implementar uma nova funcionalidade, para garantirmos a qualidade de software, devemos sempre nos atentar aos seguintes pontos:
+- Alcance: considerar os aspectos que o permitem alcançar um maior público. Ou seja, levar em consideração quantos idiomas são suportados pela interface ou em que países funciona.
+- Profundidade: Se refere à criação de mapas detalhados da arquitetura do seu software.
+- Usabilidade: A facilidade com a qual o usuário consegue utilizar o seu software.
+- Portabilidade: Diz respeito à capacidade do código-fonte do produto ser utilizado em outras plataformas de execução.
+- Confiabilidade: Obter uma taxa de falhas mais baixa possível.
+- Manutenibilidade: Facilidade de realizar modificações no software.
+- Eficiência: A métrica de eficiência se refere ao tempo de execução das tarefas do seu software e o quanto isso é compatível com o grau de desempenho efetuado por ele.
+- Métricas acionáveis: Uma análise de qualidade de software deve ser acionável, ou seja, inspirar ações corretivas no nível necessário a fim de proporcionar as melhorias esperadas.
+- Automação do processo: Analisar a qualidade de software não deve ser um processo manual. Por exigir atenção extrema, repetições exaustivas e assiduidade, pode acabar comprometendo a produtividade de quem tentar fazê-la dessa forma.
+
 
