@@ -60,7 +60,7 @@ public class AddressServiceImpl implements AddressService {
         address.setPersonId(person);
         Address savedAddress = addressRepository.save(address);
         setAsMainAddress(savedAddress.getId(), person);
-        return findById(address.getId());
+        return findById(savedAddress.getId());
     }
 
     @Override
