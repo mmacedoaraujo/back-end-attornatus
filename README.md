@@ -19,9 +19,17 @@ https://back-end-attornatus-production.up.railway.app/h2/login.jsp?jsessionid=15
 
 ## Imagem Docker para testes locais:
 
-https://hub.docker.com/repository/docker/mmacedoaraujo/person-address-api/general
+Comando para rodar a imagem do projeto localmente através do docker:
 
 docker run -p 8080:8080 mmacedoaraujo/person-address-api:latest
+
+https://hub.docker.com/repository/docker/mmacedoaraujo/person-address-api/general
+
+Caso o link acima não funcione, basta pesquisar por:
+
+![image](https://user-images.githubusercontent.com/103322548/212992048-688ec335-7e24-4c2d-8799-b036cf04fef3.png)
+
+
 
 
 
