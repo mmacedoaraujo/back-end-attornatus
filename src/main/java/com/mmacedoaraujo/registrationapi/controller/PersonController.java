@@ -77,7 +77,7 @@ public class PersonController {
     @PostMapping("/saveNewPerson")
     @Operation(summary = "Saves a new person",
             description = "A person is always registered with an address and that address will be automatically set as his main address." +
-                    " !IMPORTANT! The date should be in this format: dd-mm-yyyy !IMPORTANT!",
+                    " !IMPORTANT! THE DATE SHOULD BE IN THIS FORMAT: DD-MM-YYYY !IMPORTANT!",
             tags = {"Person"})
     public ResponseEntity<Person> saveNewPerson(@RequestBody PersonAddressPostRequestBody personAndAddressEntity) {
         Person savedPerson = personServiceImpl.savePerson(personAndAddressEntity);
@@ -87,7 +87,8 @@ public class PersonController {
 
     @PostMapping("/addNewAddress/{personId}")
     @Operation(summary = "Add a new address to a specified person",
-            description = "This method will add a new address to a person, using it's id to find him on the database",
+            description = "This method will add a new address to a person, using it's id to find him on the database." +
+                    "IMPORTANT! DON'T PASS THE FIELD 'personId' IN THE REQUEST",
             tags = {"Person"})
     public ResponseEntity<Person> addNewAddress(@RequestBody Address address, @PathVariable Long personId) {
         Person person = personServiceImpl.saveNewAddress(address, personId);
