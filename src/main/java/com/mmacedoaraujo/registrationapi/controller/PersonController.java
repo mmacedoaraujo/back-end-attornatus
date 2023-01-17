@@ -46,10 +46,10 @@ public class PersonController {
         return new ResponseEntity<>(personFoundById, HttpStatus.OK);
     }
 
-    @GetMapping("/findByName/{name}")
+    @GetMapping("/findByName")
     @Operation(summary = "List all users found by a specified name", description = "The default size is 10, use the parameter size to change the default value",
             tags = {"Person"})
-    public ResponseEntity<Page<Person>> findByName(@ParameterObject Pageable pageable, @PathVariable String name) {
+    public ResponseEntity<Page<Person>> findByName(@ParameterObject Pageable pageable, @RequestParam String name) {
         Page<Person> userFoundByUsername = personServiceImpl.findPersonByName(pageable, name);
 
         return new ResponseEntity<>(userFoundByUsername, HttpStatus.OK);
